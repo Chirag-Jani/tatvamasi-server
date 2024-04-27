@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
-
+const cors = require("cors");
 const dotenv = require("dotenv");
 
 const app = express();
@@ -11,6 +11,7 @@ dotenv.config();
 
 // Middleware
 app.use(bodyParser.json());
+app.use(cors());
 
 // Nodemailer transporter setup
 const transporter = nodemailer.createTransport({
