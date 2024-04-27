@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
+
 const dotenv = require("dotenv");
 
 const app = express();
@@ -28,7 +29,18 @@ app.get("/", (req, res) => {
 
 // API endpoint to send email
 app.post("/sendmail", (req, res) => {
-  const { subject, body } = req.body;
+  const { subject, name, email, contactNumber, purposeOfMeeting } = req.body;
+
+  // Email body
+  const body = `
+    You have received a meeting request from ${name}.
+    
+    Details:
+    Name: ${name}
+    Email: ${email}
+    Contact Number: ${contactNumber}
+    Purpose of Meeting: ${purposeOfMeeting}
+  `;
 
   // Email options
   const mailOptions = {
