@@ -1,9 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
-// const multer = require("multer");
-// const fs = require("fs");
-// const path = require("path");
 const dotenv = require("dotenv");
 
 const app = express();
@@ -13,16 +10,6 @@ dotenv.config();
 
 // Middleware
 app.use(bodyParser.json());
-
-// const upload = multer({
-//   dest: "attachments/",
-//   fileFilter: (req, file, cb) => {
-//     if (file.mimetype !== "application/pdf") {
-//       return cb(new Error("Only PDF files are allowed"));
-//     }
-//     cb(null, true);
-//   },
-// });
 
 // Nodemailer transporter setup
 const transporter = nodemailer.createTransport({
@@ -40,21 +27,8 @@ app.get("/", (req, res) => {
 });
 
 // API endpoint to send email
-app.post("/sendmail", upload.single("file"), (req, res) => {
+app.post("/sendmail", (req, res) => {
   const { subject, body } = req.body;
-  // const file = req.file;
-
-  // if (!file) {
-  //   return res.status(400).send("Please upload a file");
-  // }
-
-  // Rename the file to have a .pdf extension
-  // const oldPath = file.path;
-  // const newPath = path.join(path.dirname(oldPath), file.originalname + ".pdf");
-  // fs.renameSync(oldPath, newPath);
-
-  // Read the PDF file
-  // const pdfAttachment = fs.readFileSync(newPath);
 
   // Email options
   const mailOptions = {
@@ -62,13 +36,6 @@ app.post("/sendmail", upload.single("file"), (req, res) => {
     to: process.env.TO_MAIL_ADDRESS, // Receiver address
     subject: subject, // Subject line
     text: body, // Plain text body
-    // attachments: [
-    //   {
-    //     filename: file.originalname + ".pdf",
-    //     content: pdfAttachment,
-    //     contentType: "application/pdf",
-    //   },
-    // ],
   };
 
   // Sending email
