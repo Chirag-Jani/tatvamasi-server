@@ -1,5 +1,5 @@
 const express = require("express");
-// const bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 // const multer = require("multer");
 // const fs = require("fs");
@@ -12,7 +12,8 @@ const port = 9000;
 dotenv.config();
 
 // Middleware
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
+
 // const upload = multer({
 //   dest: "attachments/",
 //   fileFilter: (req, file, cb) => {
